@@ -13,5 +13,9 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
 
+  jwt:
+    secret: mi-clave-secreta-super-segura-para-jwt-barberia
+    expiration: 86400000
+    
 server:
   port: 8080

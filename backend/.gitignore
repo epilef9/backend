@@ -34,3 +34,7 @@ build/
 
 ### Custom ###
 barberia_db.sql
+
+# Archivos de configuración local (credenciales)
+src/main/resources/application.yml
+application.yml
