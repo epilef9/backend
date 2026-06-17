@@ -48,7 +48,7 @@ public class AuthController {
             token,
             usuario.getEmail(),
             usuario.getNombre(),
-            usuario.getRol()
+            usuario.getRol().toString()
         );
         
         return ResponseEntity.ok(response);
@@ -68,7 +68,7 @@ public class AuthController {
         nuevoUsuario.setEmail(registerRequest.getEmail());
         nuevoUsuario.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
         nuevoUsuario.setTelefono(registerRequest.getTelefono());
-        nuevoUsuario.setRol(registerRequest.getRol());
+        nuevoUsuario.setRol(Usuario.Rol.valueOf(registerRequest.getRol().toUpperCase()));
         
         Usuario usuarioCreado = usuarioService.guardar(nuevoUsuario);
         
@@ -78,7 +78,7 @@ public class AuthController {
             token,
             usuarioCreado.getEmail(),
             usuarioCreado.getNombre(),
-            usuarioCreado.getRol()
+            usuarioCreado.getRol().toString()
         );
         
         return ResponseEntity.status(HttpStatus.CREATED).body(response);

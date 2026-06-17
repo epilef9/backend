@@ -19,14 +19,12 @@ public class JwtTokenProvider {
     private long jwtExpirationMs;
     
     public String generateToken(String email) {
-        
         SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
         
-       
         return Jwts.builder()
-                .subject(email)
-                .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
+                .setSubject(email)
+                .setIssuedAt(new Date())
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationMs))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -45,8 +43,6 @@ public class JwtTokenProvider {
     public boolean validateToken(String token) {
         try {
             SecretKey key = Keys.hmacShaKeyFor(jwtSecret.getBytes());
-           
-           
             Jwts.parserBuilder()
                     .setSigningKey(key)
                     .build()
