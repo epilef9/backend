@@ -6,6 +6,9 @@ import com.barberia.backend.dto.RegisterRequest;
 import com.barberia.backend.entity.Usuario;
 import com.barberia.backend.security.JwtTokenProvider;
 import com.barberia.backend.service.UsuarioService;
+
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +32,7 @@ public class AuthController {
     
     // POST login
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
         Optional<Usuario> usuarioOpt = usuarioService.obtenerPorEmail(loginRequest.getEmail());
         
         if (usuarioOpt.isEmpty()) {
@@ -56,7 +59,7 @@ public class AuthController {
     
     // POST register
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+    public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest registerRequest) {
         Optional<Usuario> usuarioExistente = usuarioService.obtenerPorEmail(registerRequest.getEmail());
         
         if (usuarioExistente.isPresent()) {
