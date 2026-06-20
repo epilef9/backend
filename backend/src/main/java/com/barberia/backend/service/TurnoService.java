@@ -15,36 +15,33 @@ public class TurnoService {
     @Autowired
     private TurnoRepository turnoRepository;
     
-    // Obtener todos los turnos
     public List<Turno> obtenerTodos() {
         return turnoRepository.findAll();
     }
     
-    // Obtener turno por ID
     public Optional<Turno> obtenerPorId(Long id) {
         return turnoRepository.findById(id);
     }
     
-    // Obtener turnos por cliente
     public List<Turno> obtenerPorCliente(Long clienteId) {
         return turnoRepository.findByClienteId(clienteId);
     }
     
-    // Obtener turnos por barbero
     public List<Turno> obtenerPorBarbero(Long barberoId) {
         return turnoRepository.findByBarberoId(barberoId);
     }
     
-    // Guardar turno
     public Turno guardar(Turno turno) {
         return turnoRepository.save(turno);
     }
     
-    // Actualizar turno
     public Turno actualizar(Long id, Turno turnoActualizado) {
         Optional<Turno> turnoExistente = turnoRepository.findById(id);
         if (turnoExistente.isPresent()) {
             Turno turno = turnoExistente.get();
+            turno.setCliente(turnoActualizado.getCliente());
+            turno.setBarbero(turnoActualizado.getBarbero());
+            turno.setServicio(turnoActualizado.getServicio());
             turno.setFechaHora(turnoActualizado.getFechaHora());
             turno.setEstado(turnoActualizado.getEstado());
             return turnoRepository.save(turno);
@@ -52,7 +49,6 @@ public class TurnoService {
         return null;
     }
     
-    // Eliminar turno
     public void eliminar(Long id) {
         turnoRepository.deleteById(id);
     }

@@ -25,6 +25,12 @@ public class Usuario {
     
     @Column(length = 20)
     private String telefono;
+
+    @Column(columnDefinition = "TEXT")
+    private String descripcion;
+
+    @Column(length = 500)
+    private String imagenUrl;
     
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
