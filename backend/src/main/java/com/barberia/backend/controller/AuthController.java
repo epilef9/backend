@@ -48,10 +48,14 @@ public class AuthController {
         String token = jwtTokenProvider.generateToken(usuario.getEmail());
         
         LoginResponse response = new LoginResponse(
+            usuario.getId(),
             token,
             usuario.getEmail(),
             usuario.getNombre(),
-            usuario.getRol().toString()
+            usuario.getRol().toString(),
+            usuario.getTelefono(),
+            usuario.getDescripcion(),
+            usuario.getImagenUrl()
         );
         
         return ResponseEntity.ok(response);
@@ -78,10 +82,14 @@ public class AuthController {
         String token = jwtTokenProvider.generateToken(usuarioCreado.getEmail());
         
         LoginResponse response = new LoginResponse(
+            usuarioCreado.getId(),
             token,
             usuarioCreado.getEmail(),
             usuarioCreado.getNombre(),
-            usuarioCreado.getRol().toString()
+            usuarioCreado.getRol().toString(),
+            usuarioCreado.getTelefono(),
+            usuarioCreado.getDescripcion(),
+            usuarioCreado.getImagenUrl()
         );
         
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
