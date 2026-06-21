@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class TurnoDto {
     private Long id;
+    private Integer clienteId;
     private String cliente;
     private String telefono;
     private String fecha;

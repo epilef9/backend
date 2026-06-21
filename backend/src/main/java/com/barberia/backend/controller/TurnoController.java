@@ -34,8 +34,11 @@ public class TurnoController {
     private TurnoDto convertToDto(Turno turno) {
         TurnoDto dto = new TurnoDto();
         dto.setId(Long.valueOf(turno.getId()));
-        dto.setCliente(turno.getCliente().getNombre());
-        dto.setTelefono(turno.getCliente().getTelefono());
+        if (turno.getCliente() != null) {
+            dto.setClienteId(turno.getCliente().getId());
+            dto.setCliente(turno.getCliente().getNombre());
+            dto.setTelefono(turno.getCliente().getTelefono());
+        }
         dto.setFecha(turno.getFechaHora().toLocalDate().toString());
         dto.setHora(turno.getFechaHora().toLocalTime().toString());
         dto.setServicio(turno.getServicio().getNombre());
@@ -50,19 +53,42 @@ public class TurnoController {
         Turno turno = new Turno();
 
         // Cliente
-        Usuario cliente;
-        String emailTemporal = dto.getCliente().replaceAll("\\s+", "").toLowerCase() + "@temp.com";
-        var clienteOpt = usuarioRepository.findByEmail(emailTemporal);
-        if (clienteOpt.isEmpty()) {
-            cliente = new Usuario();
-            cliente.setNombre(dto.getCliente());
-            cliente.setTelefono(dto.getTelefono());
-            cliente.setEmail(emailTemporal);
-            cliente.setPassword("123456");
-            cliente.setRol(Usuario.Rol.CLIENTE);
-            usuarioRepository.save(cliente);
-        } else {
-            cliente = clienteOpt.get();
+        Usuario cliente = null;
+        if (dto.getClienteId() != null) {
+            var clienteOpt = usuarioRepository.findById(Long.valueOf(dto.getClienteId()));
+            if (clienteOpt.isPresent()) {
+                cliente = clienteOpt.get();
+            }
+        }
+
+        if (cliente == null && dto.getCliente() != null) {
+            // Intenta buscar por email o teléfono si existe un usuario registrado con ese nombre
+            List<Usuario> matchedUsers = usuarioRepository.findAll().stream()
+                .filter(u -> u.getNombre().equalsIgnoreCase(dto.getCliente()))
+                .collect(Collectors.toList());
+            if (!matchedUsers.isEmpty()) {
+                // Preferir un usuario que no tenga email @temp
+                cliente = matchedUsers.stream()
+                    .filter(u -> !u.getEmail().endsWith("@temp.com"))
+                    .findFirst()
+                    .orElse(matchedUsers.get(0));
+            }
+        }
+
+        if (cliente == null) {
+            String emailTemporal = dto.getCliente().replaceAll("\\s+", "").toLowerCase() + "@temp.com";
+            var clienteOpt = usuarioRepository.findByEmail(emailTemporal);
+            if (clienteOpt.isEmpty()) {
+                cliente = new Usuario();
+                cliente.setNombre(dto.getCliente());
+                cliente.setTelefono(dto.getTelefono());
+                cliente.setEmail(emailTemporal);
+                cliente.setPassword("123456");
+                cliente.setRol(Usuario.Rol.CLIENTE);
+                usuarioRepository.save(cliente);
+            } else {
+                cliente = clienteOpt.get();
+            }
         }
         turno.setCliente(cliente);
 
