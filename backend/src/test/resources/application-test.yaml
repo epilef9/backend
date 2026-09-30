@@ -1,0 +1,14 @@
+# Perfil "test": reemplaza MySQL por una base H2 en memoria, así los tests
+# (y el contextLoads) corren sin necesitar el MySQL local levantado.
+spring:
+  datasource:
+    url: jdbc:h2:mem:barber_test;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
