@@ -35,7 +35,7 @@ class LoginSeleniumE2ETest {
     void abrirChrome() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new", "--window-size=1440,1000");
+        options.addArguments("--window-size=1440,1000");
         driver = new ChromeDriver(options);
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
     }
