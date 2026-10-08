@@ -33,10 +33,10 @@ public class DataSeeder {
 
             // Sembrar Servicios si no existen
             if (servicioRepository.count() == 0) {
-                servicioRepository.save(new Servicio(null, "Corte Clásico", "Corte de cabello tradicional", new BigDecimal("15.00"), 30));
-                servicioRepository.save(new Servicio(null, "Corte y Barba", "Corte de cabello y perfilado de barba", new BigDecimal("25.00"), 45));
-                servicioRepository.save(new Servicio(null, "Perfilado de Barba", "Solo arreglo de barba", new BigDecimal("10.00"), 20));
-                servicioRepository.save(new Servicio(null, "Corte Premium", "Corte, lavado y peinado", new BigDecimal("20.00"), 40));
+                servicioRepository.save(new Servicio(null, "Corte Clásico", "Corte de cabello tradicional", new BigDecimal("15000.00"), 30));
+                servicioRepository.save(new Servicio(null, "Corte y Barba", "Corte de cabello y perfilado de barba", new BigDecimal("20000.00"), 45));
+                servicioRepository.save(new Servicio(null, "Perfilado de Barba", "Solo arreglo de barba", new BigDecimal("5000.00"), 20));
+                servicioRepository.save(new Servicio(null, "Corte Premium", "Corte, lavado y peinado", new BigDecimal("22000.00"), 40));
                 System.out.println("Servicios por defecto creados exitosamente.");
             }
         };

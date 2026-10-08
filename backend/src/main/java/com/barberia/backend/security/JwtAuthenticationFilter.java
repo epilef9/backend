@@ -21,14 +21,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtTokenProvider jwtTokenProvider;
     
     @Override
+    //El metodo doFilterInternal se encarga de interceptar cada solicitud HTTP entrante y verificar si contiene un token JWT válido. Si el token es válido, se extrae el email del usuario y se establece la autenticación en el contexto de seguridad de Spring Security
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
         
         try {
             String jwt = getJwtFromRequest(request);
+            //Valida el token y obtiene el email del usuario
             
             if (jwt != null && jwtTokenProvider.validateToken(jwt)) {
                 String email = jwtTokenProvider.getUserEmailFromToken(jwt);
+                //Autoriza al usuario y establece la autenticación en el contexto de seguridad
                 UsernamePasswordAuthenticationToken authentication = 
                     new UsernamePasswordAuthenticationToken(email, null, null);
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
