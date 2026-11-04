@@ -9,6 +9,8 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+    # Cierra la conexión a la base al terminar cada request (saca el WARN de open-in-view)
+    open-in-view: false
     # Sin dialecto fijo: Hibernate lo detecta solo (MySQL local o PostgreSQL/MySQL en la nube)
 
 jwt:
