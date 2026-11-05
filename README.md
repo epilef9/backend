@@ -50,3 +50,4 @@ Base URL: `http://localhost:8080`
 * `GET`, `POST`, `PUT /{id}`, `DELETE /{id}` para el registro de pagos.
 
 Servicio Render Backend: https://backend-ef4b.onrender.com
+Servicio Render BFF: https://bff-wlqv.onrender.com
