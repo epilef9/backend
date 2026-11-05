@@ -76,7 +76,7 @@ class UsuarioServiceTest {
 
         Usuario resultado = usuarioService.actualizar(99L, new Usuario());
 
-        assertThat(resultado).isNotNull();
+        assertThat(resultado).isNull();
         verify(usuarioRepository, never()).save(any(Usuario.class));
     }
 }
