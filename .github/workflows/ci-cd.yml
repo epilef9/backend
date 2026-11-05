@@ -110,4 +110,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Disparar deploy en Render
-        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL }}"
+        run: curl -fsS -X POST "${{ secrets.RENDER_DEPLOY_HOOK_URL_MAL }}"
